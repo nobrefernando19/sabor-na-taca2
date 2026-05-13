@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor na Taça | Premium Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Jost:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <nav id="navbar">
+        <div class="logo">SABOR <span>NA</span> TAÇA</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#historia">História</a></li>
+            <li><a href="#galeria">Nossa Galeria</a></li>
+        </ul>
+        <button class="btn-contato" onclick="openWelcome()">Pedir Agora</button>
+    </nav>
+
+    <div id="welcomeModal" class="modal-overlay">
+        <div class="modal-content" data-aos="zoom-in">
+            <span class="close-modal" onclick="closeWelcome()">&times;</span>
+            <div class="modal-header">
+                <span class="badge">Sabor na Taça</span>
+                <h2>Seja Bem-vindo! 🍹</h2>
+            </div>
+            <div class="modal-body">
+                <p>É um prazer receber-te no nosso espaço digital.</p>
+                <p>Estamos prontos para servir-te o melhor da coquetelaria artesanal do <strong>IMPP</strong>. Prepara-te para uma experiência única de sabor!</p>
+            </div>
+            <div class="modal-footer">
+                <a href="https://wa.me/244975650516?text=Olá!%20Gostaria%20de%20fazer%20uma%20encomenda." class="whatsapp-float" target="_blank">"Ir para o WhatsApp"</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="home" class="hero">
+        <div class="hero-video-bg">
+            <div class="overlay"></div>
+            <img src="https://images.pexels.com/photos/1189257/pexels-photo-1189257.jpeg?auto=compress&cs=tinysrgb&w=1260" alt="Hero Background">
+        </div>
+        <div class="hero-content" data-aos="zoom-out">
+            <span class="badge">Inovação & Sabor</span>
+            <h1>A Arte de <em>Beber</em> o Conhecimento</h1>
+            <p>Onde o rigor do código encontra a perfeição da coquetelaria.</p>
+        </div>
+    </section>
+
+    <section id="historia" class="section-historia">
+        <div class="container" data-aos="fade-up">
+            <span class="section-label">A Nossa Jornada</span>
+            <h2>Nossa História</h2>
+            <div class="historia-content">
+                <p>Tudo começou na sala <strong>8B do IMPP-Gab do Saber</strong>, entre linhas de código e algoritmos complexos. Como estudantes da 12ª classe de Informática, sempre fomos movidos pelo desejo de criar algo que unisse a <strong>precisão técnica com a arte de   proporcionar momentos únicos.</strong></p>
+                <p>A ideia ganhou vida nas aulas de <strong>Empreendedorismo</strong>. Percebemos que preparar o drink perfeito é como escrever código: exige a mistura exata de ingredientes e uma estrutura sólida.</p>
+                <div class="agradecimento-box">
+                    <p>Agradecemos profundamente à <strong>Professora Quiai</strong> pelo seu esforço incansável e pela ideia de organizar esta feira. Foi o seu desafio que nos motivou a tirar o projeto do papel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria" class="section-galeria">
+        <div class="container">
+            <div class="section-header" data-aos="fade-down">
+                <span class="section-label">Exclusividade</span>
+                <h2>Nossa Galeria</h2>
+                <p>20 criações exclusivas. Clique ou passe o mouse para ver os nomes.</p>
+            </div>
+
+            <div class="galeria-grid">
+                <div class="gal-item" data-aos="fade-up">
+                    <div class="img-box">
+                        <img src="imagens/ananas/ChatGPT Image 12_05_2026, 16_23_21 (0_0).png" alt="Drink 1">
+                        <div class="gal-overlay"><span>Pérola do IMPP</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-box">
+                        <img src="imagens/ananas/ChatGPT Image 12_05_2026, 16_23_21 (0_1).png" alt="Drink 2">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-box">
+                        <img src="imagens/ananas/ChatGPT Image 12_05_2026, 16_23_21 (0_2).png" alt="Drink 3">
+                        <div class="gal-overlay"><span>Algoritmo Doce</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="img-box">
+                        <img src="imagens/goiaba/ChatGPT Image 12_05_2026, 16_33_23 (0_0).png" alt="Drink 4">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="img-box">
+                        <img src="imagens/goiaba/ChatGPT Image 12_05_2026, 16_33_23 (0_1).png" alt="Drink 5">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="500">
+                    <div class="img-box">
+                        <img src="imagens/laranja/ChatGPT Image 12_05_2026, 16_27_19 (0_0).png" alt="Drink 6">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="600">
+                    <div class="img-box">
+                        <img src="imagens/laranja/ChatGPT Image 12_05_2026, 16_27_19 (0_1).png" alt="Drink 7">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="700">
+                    <div class="img-box">
+                        <img src="imagens/laranja/ChatGPT Image 12_05_2026, 16_27_19 (0_2).png" alt="Drink 8">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="800">
+                    <div class="img-box">
+                        <img src="imagens/limão/ChatGPT Image 12_05_2026, 16_29_36 (0_0).png" alt="Drink 9">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="900">
+                    <div class="img-box">
+                        <img src="imagens/limão/ChatGPT Image 12_05_2026, 16_29_36 (0_1).png" alt="Drink 10">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="img-box">
+                        <img src="imagens/limão/ChatGPT Image 12_05_2026, 16_29_36 (0_2).png" alt="Drink 11">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1100">
+                    <div class="img-box">
+                        <img src="imagens/mucua/ChatGPT Image 12_05_2026, 16_35_06 (0_0).png" alt="Drink 12">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1200">
+                    <div class="img-box">
+                        <img src="imagens/mucua/ChatGPT Image 12_05_2026, 16_35_06 (0_1).png" alt="Drink 13">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1300">
+                    <div class="img-box">
+                        <img src="imagens/mucua/ChatGPT Image 12_05_2026, 16_35_06 (0_2).png" alt="Drink 14">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1400">
+                    <div class="img-box">
+                        <img src="imagens/tamarindo/ChatGPT Image 12_05_2026, 16_30_33 (0_0).png" alt="Drink 15">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1500">
+                    <div class="img-box">
+                        <img src="imagens/tamarindo/ChatGPT Image 12_05_2026, 16_30_33 (0_1).png" alt="Drink 16">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1600">
+                    <div class="img-box">
+                        <img src="imagens/tamarindo/ChatGPT Image 12_05_2026, 16_30_33 (0_2).png" alt="Drink 17">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1700">
+                    <div class="img-box">
+                        <img src="imagens/titaia/ChatGPT Image 12_05_2026, 16_32_26 (0_0).png" alt="Drink 18">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1800">
+                    <div class="img-box">
+                        <img src="imagens/titaia/ChatGPT Image 12_05_2026, 16_32_26 (0_1).png" alt="Drink 19">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                <div class="gal-item" data-aos="fade-up" data-aos-delay="1900">
+                    <div class="img-box">
+                        <img src="imagens/titaia/ChatGPT Image 12_05_2026, 16_32_26 (0_2).png" alt="Drink 20">
+                        <div class="gal-overlay"><span>Lógica Cítrica</span></div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo-footer">SABOR <span>NA</span> TAÇA</div>
+        <p>© 2026 O Saber na Taça | Desenvolvido por Alunos do Curso de Informática do IMPP-GAB DO SABER</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // 1. Inicializar as animações de scroll
+        AOS.init({ duration: 1000, once: true });
+
+        // 2. Lógica do Cursor Personalizado
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+
+        // Ouve o movimento do rato e atualiza a posição dos elementos visuais
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Calcula a posição para centralizar o cursor no ponteiro real
+            cursor.style.transform = `translate3d(calc(${x}px - 50%), calc(${y}px - 50%), 0)`;
+            follower.style.transform = `translate3d(calc(${x}px - 50%), calc(${y}px - 50%), 0)`;
+        });
+
+        // 3. Funções de Controle da Janela de Boas-Vindas (Modal)
+        
+        // Exibe a janela mudando o estilo de display para 'flex'
+        function openWelcome() {
+            document.getElementById('welcomeModal').style.display = 'flex';
+        }
+
+        // Oculta a janela mudando o estilo de display para 'none'
+        function closeWelcome() {
+            document.getElementById('welcomeModal').style.display = 'none';
+        }
+
+        // Fecha o modal automaticamente se o utilizador clicar fora da caixa de conteúdo
+        window.onclick = function(event) {
+            const modal = document.getElementById('welcomeModal');
+            if (event.target == modal) {
+                closeWelcome();
+            }
+        }
+    </script>
+</body>
+</html>

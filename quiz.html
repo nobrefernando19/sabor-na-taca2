@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sabor na Taça | O Desafio</title>
+    <link rel="stylesheet" href="style1.css">
+    <!-- Fontes do Google e Ícones para a barra superior -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Jost:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Ligação com o novo arquivo de estilos CSS separado -->
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+    <!-- Botão simples para regressar ao site principal index.html -->
+    <a href="index.html" class="btn-voltar">
+        <i class="fa-solid fa-arrow-left"></i> Voltar ao Site
+    </a>
+
+    <!-- Balão de aviso flutuante para respostas certas ou erradas -->
+    <div class="aviso" id="caixaAviso"></div>
+
+    <!-- Contentor principal do jogo com efeito de vidro -->
+    <div class="caixa">
+        
+        <!-- TELA 1: Registo do Nome do Aluno/Cliente -->
+        <div class="tela ativa" id="telaInicio">
+            <span class="icone">🏆</span>
+            <h3 class="titulo-principal">Cultura Geral & Angola</h3>
+            
+            <div class="banner-premio">
+                <h3>Acerta 8 de 10 perguntas e ganhas 1 cocktail grátis! 🎉</h3>
+            </div>
+            
+            <div class="campo-nome">
+                <label for="nomeInput">Insira o seu nome:</label>
+                <input type="text" id="nomeInput" placeholder="Como se chama?" maxlength="24" />
+            </div>
+            
+            <button class="botao" onclick="começarJogo()">Iniciar Desafio</button>
+        </div>
+
+        <!-- TELA 2: Painel de Perguntas e Respostas -->
+        <div class="tela" id="telaJogo">
+            <div class="topo-jogo">
+                <div class="jogador" id="nomeJogador">Olá, Convidado! 👋</div>
+                
+                <!-- Estrutura do cronómetro circular de 15 segundos -->
+                <div class="cronometro">
+                    <svg width="50" height="50" viewBox="0 0 50 50">
+                        <circle class="tempo-fundo" cx="25" cy="25" r="23"/>
+                        <circle class="tempo-arco" id="arcoTempo" cx="25" cy="25" r="23"/>
+                    </svg>
+                    <div class="tempo-numero" id="numeroTempo">15</div>
+                </div>
+                
+                <!-- Indicador de estrelas ganhas -->
+                <div class="estrelas" id="painelEstrelas">☆☆☆☆☆</div>
+            </div>
+            
+            <div class="info-pergunta">
+                <span id="contadorPerguntas">Pergunta 1 de 10</span>
+            </div>
+            
+            <!-- Barra de progresso visual -->
+            <div class="barra-fundo">
+                <div class="barra-progresso" id="progresso"></div>
+            </div>
+            
+            <!-- Bloco onde aparece a pergunta ativa -->
+            <div class="pergunta-bloco">
+                <span class="badge" id="dificuldadeBadge">Fácil 🟢</span>
+                <p class="pergunta-texto" id="textoPergunta">Carregando...</p>
+            </div>
+            
+            <!-- Grelha onde são geradas as 4 opções de resposta -->
+            <div class="opcoes-grelha" id="opcoes"></div>
+        </div>
+
+        <!-- TELA 3: Painel de Resultados Finais -->
+        <div class="tela" id="telaFim">
+            <span class="icone" id="iconeFinal">🏆</span>
+            <h1 class="titulo-final" id="tituloFim">Fim de Jogo!</h1>
+            <p class="subtitulo-final" id="subtituloFim"></p>
+            
+            <!-- Mostrador da pontuação numérica -->
+            <div class="resultado-pontos">
+                <span>Pontuação Final</span>
+                <div class="pontos-numero" id="pontosFim">0/10</div>
+            </div>
+            
+            <!-- Bloco de prémio que aparece apenas se o utilizador vencer (>= 8 acertos) -->
+            <div class="painel-vencedor" id="blocoPremio" style="display:none;">
+                <p>🎉 Recompensa Ativada!</p>
+                <h2>Ganhou um Cocktail Grátis!</h2>
+                <div class="codigo-premio" id="codigoCupao">SNT-XXXX</div>
+                <p class="nota">Mostre este código à nossa equipa na banca da feira.</p>
+            </div>
+            
+            <button class="botao" onclick="reiniciarJogo()">Tentar Novamente</button><br>
+            <a href="index.html" class="botao-borda">Voltar à Página Inicial</a>
+        </div>
+    </div>
+
+    <!-- Script de lógica do jogo -->
+    <script>
+        // Banco de perguntas sobre Angola e Cultura Geral
+        const bancoPerguntas = [
+          {q:"Qual é a capital de Angola?",o:["Luanda","Benguela","Huambo","Lubango"],a:0,d:"easy"},
+          {q:"Em que ano Angola se tornou independente?",o:["1974","1975","1976","1980"],a:1,d:"easy"},
+          {q:"Qual é a moeda oficial de Angola?",o:["Real","Kwanza","Rand","Euro"],a:1,d:"easy"},
+          {q:"Qual é o idioma oficial de Angola?",o:["Francês","Inglês","Português","Espanhol"],a:2,d:"easy"},
+          {q:"Qual é o principal produto exportado por Angola?",o:["Café","Diamantes","Petróleo","Madeira"],a:2,d:"easy"},
+          {q:"A kizomba é um estilo de quê?",o:["Culinária","Dança e música","Artesanato","Vestuário"],a:1,d:"easy"},
+          {q:"Em que continent fica Angola?",o:["Ásia","América","África","Europa"],a:2,d:"easy"},
+          {q:"Qual é o rio mais importante de Angola?",o:["Cunene","Cuanza","Zambeze","Cassai"],a:1,d:"easy"},
+          {q:"Qual cor da bandeira de Angola representa o sangue?",o:["Preto","Amarelo","Vermelho","Verde"],a:2,d:"easy"},
+          {q:"Quantas cores tem a bandeira de Angola?",o:["3","4","2","5"],a:2,d:"easy"},
+          {q:"Qual é a cidade angolana chamada 'rainha do planalto'?",o:["Benguela","Lubango","Huambo","Malanje"],a:2,d:"medium"},
+          {q:"Qual é o pico mais alto de Angola?",o:["Serra do Moco","Monte Mário","Tundavala","Serra da Neve"],a:0,d:"medium"},
+          {q:"Quantas províncias tem Angola?",o:["14","16","18","20"],a:2,d:"medium"},
+          {q:"Qual é a língua do grupo étnico Bakongo?",o:["Umbundo","Kikongo","Kimbundu","Chokwe"],a:1,d:"medium"},
+          {q:"Quem foi o fundador do MPLA?",o:["Jonas Savimbi","Holden Roberto","Agostinho Neto","Lúcio Lara"],a:2,d:"medium"},
+          {q:"Qual é a fórmula química da água?",o:["CO₂","H₂O","O₂","NaCl"],a:1,d:"medium"},
+          {q:"Qual escritor angolano é autor de 'Mayombe'?",o:["Ondjaki","José Eduardo Agualusa","Pepetela","Manuel Rui"],a:2,d:"medium"},
+          {q:"Em que ano foi fundada a cidade de Luanda?",o:["1575","1600","1650","1520"],a:0,d:"hard"},
+          {q:"Em que ano terminou a guerra civil em Angola?",o:["1999","2000","2002","2004"],a:2,d:"hard"},
+          {q:"O rio Cunene faz fronteira entre Angola e qual país?",o:["Zâmbia","RDC","Namíbia","Botswana"],a:2,d:"hard"}
+        ];
+
+        // Variáveis de controle de estado do jogo
+        var jogador = "";
+        var perguntasSelecionadas = [];
+        var perguntaAtualIndex = 0;
+        var score = 0;
+        var temporizador = null;
+        var tempoRestante = 15;
+        
+        const totalPerguntas = 10;
+        const tempoLimite = 15;
+        const minimoParaVencer = 8;
+
+        // Função para alternar de tela de forma simples
+        function mudarTela(idTela) {
+            var telas = document.querySelectorAll('.tela');
+            for (var i = 0; i < telas.length; i++) {
+                telas[i].classList.remove('ativa');
+            }
+            document.getElementById(idTela).classList.add('ativa');
+        }
+
+        // Função simples para baralhar elementos (Algoritmo padrão de troca)
+        function baralhar(lista) {
+            var novaLista = [...lista];
+            for (var i = novaLista.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = novaLista[i];
+                novaLista[i] = novaLista[j];
+                novaLista[j] = temp;
+            }
+            return novaLista;
+        }
+
+        // Seleciona 10 perguntas misturadas por dificuldade para a partida
+        function obterPerguntasPartida() {
+            var faceis = baralhar(bancoPerguntas.filter(p => p.d === "easy")).slice(0, 3);
+            var medias = baralhar(bancoPerguntas.filter(p => p.d === "medium")).slice(0, 4);
+            var dificeis = baralhar(bancoPerguntas.filter(p => p.d === "hard")).slice(0, 3);
+            return [...faceis, ...medias, ...dificeis];
+        }
+
+        // Gera o código do cupão de prémio para o vencedor mostrar no bar
+        function gerarCodigoPremio() {
+            var caracteres = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            var codigo = 'SNT-';
+            for (var i = 0; i < 6; i++) {
+                codigo += caracteres[Math.floor(Math.random() * caracteres.length)];
+            }
+            return codigo;
+        }
+
+        // Evento ao clicar em Iniciar
+        function começarJogo() {
+            var input = document.getElementById('nameInput');
+            jogador = input.value.trim() || "Convidado";
+            perguntasSelecionadas = obterPerguntasPartida();
+            perguntaAtualIndex = 0;
+            score = 0;
+            document.getElementById('nomeJogador').textContent = "Olá, " + jogador + " 👋";
+            mudarTela('telaJogo');
+            carregarPergunta();
+        }
+
+        // Carrega a pergunta atual no ecrã
+        function carregarPergunta() {
+            if (perguntaAtualIndex >= totalPerguntas) {
+                terminarJogo();
+                return;
+            }
+
+            var dadosPergunta = perguntasSelecionadas[perguntaAtualIndex];
+            var badgeInfo = {
+                easy: { texto: "Fácil 🟢", classe: "d-easy" },
+                medium: { texto: "Médio 🟠", classe: "d-medium" },
+                hard: { texto: "Difícil 🔴", classe: "d-hard" }
+            }[dadosPergunta.d];
+
+            document.getElementById('contadorPerguntas').textContent = "Pergunta " + (perguntaAtualIndex + 1) + " de " + totalPerguntas;
+            document.getElementById('progresso').style.width = ((perguntaAtualIndex / totalPerguntas) * 100) + "%";
+
+            var badge = document.getElementById('dificuldadeBadge');
+            badge.textContent = badgeInfo.texto;
+            badge.className = 'diff-badge ' + badgeInfo.classe;
+
+            document.getElementById('textoPergunta').textContent = dadosPergunta.q;
+
+            // Baralha as opções para não ficarem sempre no mesmo sítio
+            var ordemOpcoes = baralhar([0, 1, 2, 3]);
+            var indexCorreto = ordemOpcoes.indexOf(dadosPergunta.a);
+            var blocoOpcoes = document.getElementById('opcoes');
+            blocoOpcoes.innerHTML = '';
+
+            var letras = ['A', 'B', 'C', 'D'];
+            ordemOpcoes.forEach((opcaoIndex, posicaoGrid) => {
+                var botaoOpcao = document.createElement('button');
+                botaoOpcao.className = 'opcao';
+                botaoOpcao.innerHTML = '<span class="opcao-letra">' + letras[posicaoGrid] + '</span><span>' + dadosPergunta.o[opcaoIndex] + '</span>';
+                botaoOpcao.addEventListener('click', () => verificarResposta(opcaoIndex === dadosPergunta.a, posicaoGrid, indexCorreto, botaoOpcao));
+                blocoOpcoes.appendChild(botaoOpcao);
+            });
+
+            iniciarCronometro(indexCorreto);
+        }
+
+        // Controle do tempo de 15 segundos por rodada
+        function iniciarCronometro(indexCorreto) {
+            clearInterval(temporizador);
+            tempoRestante = tempoLimite;
+            atualizarVisualTempo(tempoRestante);
+            
+            temporizador = setInterval(() => {
+                tempoRestante--;
+                atualizarVisualTempo(tempoRestante);
+                if (tempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    estourouTempo(indexCorreto);
+                }
+            }, 1000);
+        }
+
+        // Desenha visualmente o tempo na barra circular
+        function atualizarVisualTempo(t) {
+            var arco = document.getElementById('arcoTempo');
+            var numero = document.getElementById('numeroTempo');
+            var circunferencia = 145;
+            var offset = circunferencia * (1 - t / tempoLimite);
+            
+            arco.style.strokeDashoffset = offset;
+            numero.textContent = t;
+
+            var avisoLaranja = t <= 5;
+            var avisoVermelho = t <= 3;
+
+            arco.className = 'tempo-arco' + (avisoVermelho ? ' danger' : (avisoLaranja ? ' warn' : ''));
+            numero.className = 'tempo-numero' + (avisoVermelho ? ' danger' : (avisoLaranja ? ' warn' : ''));
+        }
+
+        // Executado quando o utilizador clica numa opção
+        function verificarResposta(eCorreto, posicaoClicada, indexCorreto, botao) {
+            clearInterval(temporizador);
+            
+            var todasOpcoes = document.querySelectorAll('.opcao');
+            todasOpcoes.forEach(b => b.disabled = true);
+
+            if (eCorreto) {
+                botao.classList.add('correct');
+                score++;
+                atualizarEstrelas();
+                mostrarAviso('c', 'Excelente! 🎯');
+            } else {
+                botao.classList.add('wrong');
+                todasOpcoes[indexCorreto].classList.add('reveal');
+                mostrarAviso('w', 'Ops! Resposta errada 😬');
+            }
+
+            setTimeout(() => {
+                perguntaAtualIndex++;
+                carregarPergunta();
+            }, 1500);
+        }
+
+        // Caso o tempo acabe antes de responder
+        function estourouTempo(indexCorreto) {
+            var todasOpcoes = document.querySelectorAll('.opcao');
+            todasOpcoes.forEach(b => b.disabled = true);
+            todasOpcoes[indexCorreto].classList.add('reveal');
+            mostrarAviso('t', 'Tempo esgotado! ⏰');
+
+            setTimeout(() => {
+                perguntaAtualIndex++;
+                carregarPergunta();
+            }, 1500);
+        }
+
+        // Atualiza as estrelas no topo da tela do jogo
+        function atualizarEstrelas() {
+            var textoEstrelas = '';
+            for (var i = 0; i < 5; i++) {
+                textoEstrelas += i < score ? '⭐' : '☆';
+            }
+            document.getElementById('painelEstrelas').textContent = textoEstrelas;
+        }
+
+        // Exibe balões com dicas rápidas
+        function mostrarAviso(tipo, mensagem) {
+            var caixa = document.getElementById('caixaAviso');
+            caixa.textContent = mensagem;
+            caixa.className = 'aviso ' + tipo;
+            caixa.style.opacity = '1';
+            setTimeout(() => {
+                caixa.style.opacity = '0';
+            }, 1200);
+        }
+
+        // Finaliza o jogo e calcula a vitória ou derrota
+        function terminarJogo() {
+            clearInterval(temporizador);
+            var venceu = score >= minimoParaVencer;
+
+            document.getElementById('iconeFinal').textContent = venceu ? '🏆' : '🎭';
+            document.getElementById('tituloFim').textContent = venceu ? 'Parabéns!' : 'Quase lá!';
+            document.getElementById('subtituloFim').textContent = venceu ? 
+                jogador + ", ganhaste um cocktail de graça! 🍸" : 
+                jogador + ", precisas de pelo menos 8 respostas certas para ganhar.";
+                
+            document.getElementById('pontosFim').textContent = score + "/" + totalPerguntas;
+
+            if (venceu) {
+                document.getElementById('codigoCupao').textContent = gerarCodigoPremio();
+                document.getElementById('blocoPremio').style.display = 'block';
+                soltarConfettis();
+            } else {
+                document.getElementById('blocoPremio').style.display = 'none';
+            }
+            mudarTela('telaFim');
+        }
+
+        // Reinicia todos os dados para uma nova tentativa
+        function reiniciarJogo() {
+            perguntasSelecionadas = obterPerguntasPartida();
+            perguntaAtualIndex = 0;
+            score = 0;
+            document.getElementById('painelEstrelas').textContent = '☆☆☆☆☆';
+            mudarTela('telaJogo');
+            carregarPergunta();
+        }
+
+        // Efeito simples de queda de confettis para comemoração
+        function soltarConfettis() {
+            var cores = ['#D4AF37', '#FFD700', '#FF2D78', '#ffffff'];
+            for (var i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    var confetti = document.createElement('div');
+                    confetti.className = 'cp';
+                    var tamanho = 6 + Math.random() * 8;
+                    confetti.style.cssText = 'left:' + (Math.random() * 100) + 'vw;top:-20px;width:' + tamanho + 'px;height:' + tamanho + 'px;background:' + cores[Math.floor(Math.random() * cores.length)] + ';animation-duration:' + (2 + Math.random() * 2) + 's;';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 35);
+            }
+        }
+
+        // Permite pressionar Enter na caixa de nome para iniciar
+        document.getElementById('nameInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') começarJogo();
+        });
+    </script>
+</body>
+</html>

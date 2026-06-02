@@ -1,0 +1,545 @@
+/* ============================================================
+1. DEFINIÇÃO DE CORES E VARIÁVEIS GLOBAIS
+============================================================
+*/
+:root {
+    --ouro: #d4af37;           /* Dourado Imperial */
+    --ouro-claro: #f0d060;     /* Dourado Brilhante */
+    --ouro-escuro: #a07820;    /* Dourado de Fundo */
+    --preto: #050a0f;          /* Azul Escuro Quase Preto */
+    --azul-escuro: #0a192f;    /* Azul Premium para Detalhes */
+    --branco-suave: #f5f0e8;   /* Texto Principal */
+    --vidro: rgba(255, 255, 255, 0.03); /* Fundo Translúcido */
+    --borda-ouro: rgba(212, 175, 55, 0.15); /* Borda Dourada Suave */
+    --verde-sucesso: #4CAF50;  /* Cor para Respostas Corretas */
+    --rosa-erro: #FF2D78;      /* Cor para Respostas Erradas */
+}
+
+/* ============================================================
+2. RESET E CONFIGURAÇÕES DO CORPO (BODY)
+============================================================
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Jost', sans-serif;
+    background: linear-gradient(135deg, var(--preto) 0%, var(--azul-escuro) 50%, var(--preto) 100%);
+    background-size: 400% 400%;
+    animation: moverGradiente 15s ease infinite;
+    color: var(--branco-suave);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding: 20px 10px;
+}
+
+/* Animação suave para o fundo dinâmico */
+@keyframes moverGradiente {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ============================================================
+3. BOTÃO DE REGRESSO E COMPONENTES GERAIS
+============================================================
+*/
+.btn-voltar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 1px solid var(--borda-ouro);
+    color: var(--branco-suave);
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.btn-voltar:hover {
+    border-color: var(--ouro);
+    color: var(--ouro);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* Balão de feedback flutuante (Toast) */
+.aviso {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 35px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    z-index: 100;
+    opacity: 0;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    pointer-events: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.aviso.c { background: rgba(76, 175, 80, 0.95); color: #fff; border: 1px solid var(--verde-sucesso); }
+.aviso.w { background: rgba(255, 45, 120, 0.9); color: #fff; border: 1px solid var(--rosa-erro); }
+.aviso.t { background: rgba(255, 140, 0, 0.9); color: #fff; border: 1px solid #FF8C00; }
+
+/* ============================================================
+4. CONTENTOR PRINCIPAL (GLASS CONTAINER)
+============================================================
+*/
+.caixa {
+    max-width: 650px;
+    width: 100%;
+    background: var(--vidro);
+    border: 1px solid var(--borda-ouro);
+    padding: 40px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    position: relative;
+    margin-top: 40px;
+}
+
+/* Controle de telas ativas/inativas */
+.tela {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: abrirTela 0.5s ease-out forwards;
+}
+
+.tela.ativa {
+    display: flex;
+}
+
+@keyframes abrirTela {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ícones Flutuantes */
+.icone {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-10px) rotate(4deg); }
+}
+
+/* ============================================================
+5. TELA 1: ENTRADA E BOAS-VINDAS
+============================================================
+*/
+.titulo-principal {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.banner-premio {
+    border: 1px solid var(--borda-ouro);
+    background: rgba(212, 175, 55, 0.04);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.banner-premio h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--ouro-claro);
+    font-style: italic;
+    font-weight: 300;
+}
+
+.campo-nome {
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.campo-nome label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.campo-nome input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--borda-ouro);
+    color: var(--branco-suave);
+    font-family: 'Jost', sans-serif;
+    font-size: 1.1rem;
+    padding: 15px 20px;
+    outline: none;
+    border-radius: 50px;
+    transition: 0.3s ease;
+    text-align: center;
+}
+
+.campo-nome input:focus {
+    border-color: var(--ouro);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Botões Reutilizáveis */
+.botao {
+    background: linear-gradient(135deg, var(--ouro-escuro), var(--ouro), var(--ouro-claro));
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.botao:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+}
+
+.botao-borda {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: var(--ouro);
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 15px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.botao-borda:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--branco-suave);
+}
+
+/* ============================================================
+6. TELA 2: ARENA DO JOGO (PERGUNTAS)
+============================================================
+*/
+.topo-jogo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--borda-ouro);
+}
+
+.jogador {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--ouro);
+    font-style: italic;
+}
+
+.estrelas {
+    font-size: 1.3rem;
+}
+
+/* Temporizador Circular */
+.cronometro {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.cronometro svg {
+    transform: rotate(-90deg);
+}
+
+.tempo-fundo {
+    fill: none;
+    stroke: rgba(212, 175, 55, 0.1);
+    stroke-width: 4;
+}
+
+.tempo-arco {
+    fill: none;
+    stroke: var(--ouro);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 145;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+}
+
+.tempo-arco.warn { stroke: #FF8C00; }
+.tempo-arco.danger { stroke: var(--rosa-erro); }
+
+.tempo-numero {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ouro);
+}
+.tempo-numero.warn { color: #FF8C00; }
+.tempo-numero.danger { color: var(--rosa-erro); }
+
+/* Indicadores de Progresso */
+.info-pergunta {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.info-pergunta span {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.barra-fundo {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra-progresso {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro-claro));
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* Área de Perguntas */
+.pergunta-bloco {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--borda-ouro);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: left;
+}
+
+.badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid currentColor;
+    margin-bottom: 12px;
+}
+
+.d-easy { color: #4CAF50; }
+.d-medium { color: #FF8C00; }
+.d-hard { color: var(--rosa-erro); }
+
+.pergunta-texto {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+
+/* ============================================================
+7. GRELHA DE RESPOSTAS (BOTÕES OPÇÃO)
+============================================================
+*/
+.opcoes-grelha {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 500px) {
+    .opcoes-grelha {
+        grid-template-columns: 1fr;
+    }
+}
+
+.opcao {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--borda-ouro);
+    color: var(--branco-suave);
+    padding: 16px 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    text-align: left;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.opcao:hover:not(:disabled) {
+    border-color: var(--ouro);
+    background: rgba(212, 175, 55, 0.05);
+    transform: translateY(-2px);
+}
+
+.opcao:disabled {
+    cursor: not-allowed;
+}
+
+.opcao-letra {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--ouro);
+    font-weight: bold;
+}
+
+/* Estados de feedback das respostas */
+.opcao.correct {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: var(--verde-sucesso);
+    color: #81C784;
+}
+
+.opcao.wrong {
+    background: rgba(255, 45, 120, 0.08);
+    border-color: var(--rosa-erro);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.opcao.reveal {
+    background: rgba(76, 175, 80, 0.05);
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+/* ============================================================
+8. TELA 3: RESULTADOS E CONQUISTAS
+============================================================
+*/
+.titulo-final {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: var(--ouro);
+    margin-bottom: 10px;
+}
+
+.subtitulo-final {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.resultado-pontos {
+    margin-bottom: 25px;
+}
+
+.resultado-pontos span {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.pontos-numero {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--branco-suave);
+    font-weight: bold;
+}
+
+/* Área de Prémio Ativada */
+.painel-vencedor {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+    border: 1px solid var(--ouro);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    animation: pulsarPrémio 2s infinite;
+}
+
+@keyframes pulsarPrémio {
+    0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
+    50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.35); }
+}
+
+.painel-vencedor h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--ouro-claro);
+    margin-bottom: 10px;
+}
+
+.codigo-premio {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 6px;
+    text-shadow: 0 0 10px var(--ouro);
+    margin: 15px 0;
+}
+
+.painel-vencedor .nota {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Confettis Festivos */
+.cp {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99;
+    animation: cairConfetti linear forwards;
+}
+
+@keyframes cairConfetti {
+    0% { transform: translateY(-20px) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}

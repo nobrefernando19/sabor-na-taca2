@@ -1,0 +1,44 @@
+# 🍸 Sabor na Taça — Website & Quiz Interativo
+
+Bem-vindo ao repositório oficial do **Sabor na Taça**! Este é um projeto tecnológico desenvolvido no âmbito escolar para apresentar uma solução digital moderna para a nossa banca de cocktails e sumos naturais.
+
+O projeto une uma página inicial elegante de apresentação com um jogo interativo de perguntas e respostas para os nossos clientes.
+
+---
+
+## 🚀 Funcionalidades do Projeto
+
+### 🌐 Página Inicial (`index.html`)
+* Apresentação da nossa identidade visual e conceito da banca.
+* Menu de navegação direto e intuitivo para o utilizador.
+* Design moderno, responsivo e adaptado para telemóveis e computadores.
+
+### 🎮 O Jogo de Quiz (`quiz.html`)
+* **Desafio Cultural:** 10 perguntas aleatórias extraídas de um banco de dados focado em Cultura Geral e factos sobre Angola.
+* **Dificuldade Balanceada:** O sistema escolhe automaticamente 3 perguntas fáceis, 4 médias e 3 difíceis para tornar o jogo justo.
+* **Sistema de Recompensas:** Se o utilizador acertar 8 ou mais perguntas, o jogo gera um código dinâmico exclusivo (`SNT-XXXXXX`) para o cliente levantar um cocktail grátis na nossa banca.
+* **Mecânicas de Jogo:** Inclui um cronómetro circular dinâmico de 15 segundos por pergunta, barra de progresso visual e feedback imediato de respostas certas ou erradas.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+O desenvolvimento foi feito de forma nativa e limpa, focado na leveza e rapidez de carregamento para dispositivos móveis:
+
+* **HTML5:** Estruturação semântica e organização das telas do jogo.
+* **CSS3:** Design personalizado usando *glassmorphism* (efeito de vidro fosco), animações de fundo fluídas e total responsividade (Mobile-First).
+* **JavaScript (Vanilla):** Lógica do jogo, manipulação do tempo (cronómetro), baralhamento de opções e gerador automático de códigos de prémio.
+
+---
+
+## 📁 Estrutura dos Ficheiros
+
+Para manter a organização e manutenção do código fácil, os ficheiros foram separados de forma lógica:
+* `index.html` — Página principal e vitrine da marca.
+* `quiz.html` — Estrutura e lógica de funcionamento do jogo.
+* `quiz.css` — Estilização, cores e animações exclusivas do ambiente do quiz.
+
+---
+
+## 👥 Autores
+Projeto desenvolvido pela equipa de estudantes do curso de Informática.

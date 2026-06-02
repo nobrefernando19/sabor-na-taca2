@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sabor na Taça | O Desafio</title>
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="quiz.css">
     <!-- Fontes do Google e Ícones para a barra superior -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Jost:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -182,16 +182,17 @@
         }
 
         // Evento ao clicar em Iniciar
-        function começarJogo() {
-            var input = document.getElementById('nameInput');
-            jogador = input.value.trim() || "Convidado";
-            perguntasSelecionadas = obterPerguntasPartida();
-            perguntaAtualIndex = 0;
-            score = 0;
-            document.getElementById('nomeJogador').textContent = "Olá, " + jogador + " 👋";
-            mudarTela('telaJogo');
-            carregarPergunta();
-        }
+    
+          function começarJogo() {
+         var input = document.getElementById('nomeInput'); // <-- Alterado aqui!
+         jogador = input.value.trim() || "Convidado";
+          perguntasSelecionadas = obterPerguntasPartida();
+         perguntaAtualIndex = 0;
+         score = 0;
+         document.getElementById('nomeJogador').textContent = "Olá, " + jogador + " 👋";
+    mudarTela('telaJogo');
+    carregarPergunta();
+}
 
         // Carrega a pergunta atual no ecrã
         function carregarPergunta() {
